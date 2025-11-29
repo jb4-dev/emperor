@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login - Emperor Browser</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a1560 100%);
+      color: #e0e0e0;
+      font-family: Helvetica, Arial, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .login-container {
+      background: rgba(13, 13, 13, 0.9);
+      border: 2px solid #1a1560;
+      border-radius: 12px;
+      padding: 40px;
+      max-width: 400px;
+      width: 100%;
+      box-shadow: 0 8px 32px rgba(26, 21, 96, 0.3);
+    }
+
+    .logo-container {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .logo-container svg {
+      width: 80px;
+      height: 80px;
+      filter: drop-shadow(0 0 10px rgba(26, 21, 96, 0.5));
+    }
+
+    h1 {
+      text-align: center;
+      color: #4a9eff;
+      margin-bottom: 10px;
+      font-size: 28px;
+      font-weight: 300;
+      letter-spacing: 2px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #888;
+      font-size: 14px;
+      margin-bottom: 30px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: #b0b0b0;
+      font-size: 14px;
+    }
+
+    input[type="text"],
+    input[type="password"],
+    input[type="email"] {
+      width: 100%;
+      padding: 12px 15px;
+      background: #1a1a1a;
+      border: 1px solid #333;
+      border-radius: 6px;
+      color: #e0e0e0;
+      font-size: 16px;
+      font-family: Helvetica, Arial, sans-serif;
+      transition: all 0.3s ease;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #1a1560;
+      box-shadow: 0 0 10px rgba(26, 21, 96, 0.3);
+    }
+
+    .btn {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(135deg, #1a1560 0%, #4a9eff 100%);
+      border: none;
+      border-radius: 6px;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: Helvetica, Arial, sans-serif;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 20px rgba(26, 21, 96, 0.4);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+    }
+
+    .btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .message {
+      padding: 10px;
+      margin-bottom: 20px;
+      border-radius: 6px;
+      font-size: 14px;
+      display: none;
+    }
+
+    .message.show {
+      display: block;
+      animation: slideIn 0.3s;
+    }
+
+    .message.error {
+      background: rgba(255, 50, 50, 0.1);
+      border: 1px solid #ff3232;
+      color: #ff6b6b;
+    }
+
+    .message.success {
+      background: rgba(50, 255, 50, 0.1);
+      border: 1px solid #32ff32;
+      color: #6bff6b;
+    }
+
+    .message.info {
+      background: rgba(50, 150, 255, 0.1);
+      border: 1px solid #3296ff;
+      color: #6bb5ff;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .toggle-form {
+      text-align: center;
+      margin-top: 20px;
+      color: #888;
+      font-size: 14px;
+    }
+
+    .toggle-form a {
+      color: #4a9eff;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .toggle-form a:hover {
+      text-decoration: underline;
+    }
+
+    .form-section {
+      display: none;
+    }
+
+    .form-section.active {
+      display: block;
+    }
+
+    @media (max-width: 480px) {
+      .login-container {
+        padding: 30px 20px;
+      }
+
+      h1 {
+        font-size: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <div class="logo-container" id="logoContainer"></div>
+    
+    <h1>EMPEROR BROWSER</h1>
+    <div class="subtitle">Secure Access Portal</div>
+
+    <div class="message" id="message"></div>
+
+    <!-- Login Form -->
+    <div class="form-section active" id="loginSection">
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="loginUsername">Username</label>
+          <input 
+            type="text" 
+            id="loginUsername" 
+            name="username" 
+            placeholder="Enter username"
+            required
+            autocomplete="username"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="loginPassword">Password</label>
+          <input 
+            type="password" 
+            id="loginPassword" 
+            name="password" 
+            placeholder="Enter password"
+            required
+            autocomplete="current-password"
+          />
+        </div>
+
+        <button type="submit" class="btn" id="loginBtn">LOG IN</button>
+      </form>
+
+      <div class="toggle-form">
+        Don't have an account? <a id="showSignup">Sign up</a>
+      </div>
+    </div>
+
+    <!-- Signup Form -->
+    <div class="form-section" id="signupSection">
+      <form id="signupForm">
+        <div class="form-group">
+          <label for="signupUsername">Username</label>
+          <input 
+            type="text" 
+            id="signupUsername" 
+            name="username" 
+            placeholder="Choose username"
+            required
+            autocomplete="username"
+            minlength="3"
+            maxlength="50"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="signupEmail">Email</label>
+          <input 
+            type="email" 
+            id="signupEmail" 
+            name="email" 
+            placeholder="Enter email"
+            required
+            autocomplete="email"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="signupPassword">Password</label>
+          <input 
+            type="password" 
+            id="signupPassword" 
+            name="password" 
+            placeholder="Choose password (min 6 characters)"
+            required
+            autocomplete="new-password"
+            minlength="6"
+          />
+        </div>
+
+        <button type="submit" class="btn" id="signupBtn">SIGN UP</button>
+      </form>
+
+      <div class="toggle-form">
+        Already have an account? <a id="showLogin">Log in</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Load SVG logo
+    fetch('1294802.svg')
+      .then(response => response.text())
+      .then(svg => {
+        svg = svg.replace(/fill="[^"]*"/g, 'fill="#1a1560"')
+                 .replace(/stroke="[^"]*"/g, 'stroke="#1a1560"');
+        document.getElementById('logoContainer').innerHTML = svg;
+      })
+      .catch(err => console.log('Logo not loaded:', err));
+
+    const loginSection = document.getElementById('loginSection');
+    const signupSection = document.getElementById('signupSection');
+    const messageEl = document.getElementById('message');
+
+    // Check URL parameter to determine which form to show
+    const urlParams = new URLSearchParams(window.location.search);
+    const mode = urlParams.get('mode');
+    
+    if (mode === 'signup') {
+      loginSection.classList.remove('active');
+      signupSection.classList.add('active');
+    }
+
+    // Toggle between login and signup
+    document.getElementById('showSignup').addEventListener('click', () => {
+      loginSection.classList.remove('active');
+      signupSection.classList.add('active');
+      hideMessage();
+      // Update URL without reloading
+      window.history.pushState({}, '', '/login.html?mode=signup');
+    });
+
+    document.getElementById('showLogin').addEventListener('click', () => {
+      signupSection.classList.remove('active');
+      loginSection.classList.add('active');
+      hideMessage();
+      // Update URL without reloading
+      window.history.pushState({}, '', '/login.html');
+    });
+
+    // Handle login
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const username = document.getElementById('loginUsername').value;
+      const password = document.getElementById('loginPassword').value;
+      const btn = document.getElementById('loginBtn');
+      
+      btn.disabled = true;
+      btn.textContent = 'LOGGING IN...';
+      
+      try {
+        const formData = new FormData();
+        formData.append('action', 'login');
+        formData.append('username', username);
+        formData.append('password', password);
+        
+        const response = await fetch('auth.php', {
+          method: 'POST',
+          body: formData
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+          localStorage.setItem('session_id', data.session_id);
+          localStorage.setItem('username', data.username);
+          localStorage.setItem('is_admin', data.is_admin);
+          showMessage('Login successful! Redirecting...', 'success');
+          setTimeout(() => {
+            window.location.href = 'main.html';
+          }, 1000);
+        } else {
+          showMessage(data.error || 'Login failed', 'error');
+          btn.disabled = false;
+          btn.textContent = 'LOG IN';
+        }
+      } catch (error) {
+        console.error('Login error:', error);
+        showMessage('Connection error. Please try again.', 'error');
+        btn.disabled = false;
+        btn.textContent = 'LOG IN';
+      }
+    });
+
+    // Handle signup
+    document.getElementById('signupForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const username = document.getElementById('signupUsername').value;
+      const email = document.getElementById('signupEmail').value;
+      const password = document.getElementById('signupPassword').value;
+      const btn = document.getElementById('signupBtn');
+      
+      btn.disabled = true;
+      btn.textContent = 'CREATING ACCOUNT...';
+      
+      try {
+        const formData = new FormData();
+        formData.append('action', 'signup');
+        formData.append('username', username);
+        formData.append('email', email);
+        formData.append('password', password);
+        
+        const response = await fetch('auth.php', {
+          method: 'POST',
+          body: formData
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+          showMessage(data.message, 'success');
+          document.getElementById('signupForm').reset();
+          setTimeout(() => {
+            signupSection.classList.remove('active');
+            loginSection.classList.add('active');
+            window.history.pushState({}, '', '/login.html');
+          }, 2000);
+        } else {
+          showMessage(data.error || 'Signup failed', 'error');
+        }
+      } catch (error) {
+        console.error('Signup error:', error);
+        showMessage('Connection error. Please try again.', 'error');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'SIGN UP';
+      }
+    });
+
+    function showMessage(text, type) {
+      messageEl.textContent = text;
+      messageEl.className = `message ${type} show`;
+    }
+
+    function hideMessage() {
+      messageEl.classList.remove('show');
+    }
+
+    // Clear messages on input
+    document.querySelectorAll('input').forEach(input => {
+      input.addEventListener('input', hideMessage);
+    });
+  </script>
+</body>
+</html>

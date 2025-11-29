@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Emperor Browser</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: #0d0d0d;
+      color: #e0e0e0;
+      font-family: Helvetica, Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    header {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      background-color: #121212;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+    }
+    .header-branding {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    .header-logo {
+      height: 30px;
+      width: 30px;
+      filter: invert(15%) sepia(31%) saturate(2370%) hue-rotate(224deg) brightness(85%) contrast(88%);
+    }
+    .header-name {
+      color: #e0e0e0;
+      font-size: 20px;
+      font-weight: bold;
+    }
+    .header-actions {
+      display: flex;
+      gap: 20px;
+    }
+    button {
+      background-color: #0078ff;
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 15px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    button:hover {
+      background-color: #3399ff;
+    }
+    .signup {
+      background-color: #2c2c2c;
+    }
+    .signup:hover {
+      background-color: #3d3d3d;
+    }
+    h1 {
+      font-size: 100px;
+      margin: 0;
+      background: linear-gradient(135deg, #1a1560 0%, #4a9eff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    p {
+      font-size: 18px;
+      margin-top: 20px;
+      color: #999;
+      text-align: center;
+      max-width: 600px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-branding">
+      <img src="1294802.svg" alt="Site Logo" class="header-logo" />
+      <span class="header-name">PGN Viewer</span>
+    </div>
+    <div class="header-actions">
+      <button id="login">Log In</button>
+      <button class="signup" id="signup">Sign Up</button>
+    </div>
+  </header>
+
+  <h1>404</h1>
+  <p>Page not found.</p>
+
+  <script>
+    document.getElementById("login").addEventListener("click", () => {
+      window.location.href = "/login.html";
+    });
+
+    document.getElementById("signup").addEventListener("click", () => {
+      window.location.href = "/login.html?mode=signup";
+    });
+  </script>
+</body>
+</html>

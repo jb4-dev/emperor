@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Settings - Emperor Browser</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #0d0d0d;
+      color: #e0e0e0;
+      font-family: Helvetica, Arial, sans-serif;
+      min-height: 100vh;
+    }
+
+    .header {
+      background: #1a1a1a;
+      border-bottom: 2px solid #1a1560;
+      padding: 20px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header-title {
+      font-size: 24px;
+      color: #4a9eff;
+      font-weight: 600;
+    }
+
+    .btn {
+      padding: 8px 16px;
+      background: #1a1560;
+      border: 1px solid #4a9eff;
+      border-radius: 6px;
+      color: #4a9eff;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 14px;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn:hover {
+      background: #4a9eff;
+      color: #fff;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    .settings-section {
+      background: #1a1a1a;
+      border-radius: 8px;
+      padding: 25px;
+      margin-bottom: 20px;
+    }
+
+    .section-title {
+      font-size: 20px;
+      color: #4a9eff;
+      margin-bottom: 20px;
+      border-bottom: 1px solid #333;
+      padding-bottom: 10px;
+    }
+
+    .setting-item {
+      margin-bottom: 25px;
+    }
+
+    .setting-label {
+      display: block;
+      color: #e0e0e0;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .setting-description {
+      color: #888;
+      font-size: 13px;
+      margin-bottom: 10px;
+    }
+
+    .radio-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .radio-option {
+      display: flex;
+      align-items: center;
+      padding: 12px;
+      background: #2a2a2a;
+      border: 2px solid #333;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .radio-option:hover {
+      border-color: #4a9eff;
+      background: #333;
+    }
+
+    .radio-option.selected {
+      border-color: #4a9eff;
+      background: #1a1560;
+    }
+
+    .radio-option input[type="radio"] {
+      margin-right: 12px;
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+    }
+
+    .radio-option-content {
+      flex: 1;
+    }
+
+    .radio-option-name {
+      font-weight: 600;
+      color: #e0e0e0;
+      margin-bottom: 4px;
+    }
+
+    .radio-option-desc {
+      font-size: 12px;
+      color: #888;
+    }
+
+    .save-btn {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(135deg, #1a1560 0%, #4a9eff 100%);
+      border: none;
+      border-radius: 6px;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .save-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 20px rgba(26, 21, 96, 0.4);
+    }
+
+    .message {
+      padding: 15px;
+      border-radius: 6px;
+      margin-bottom: 20px;
+      display: none;
+    }
+
+    .message.show {
+      display: block;
+    }
+
+    .message.success {
+      background: rgba(50, 255, 50, 0.1);
+      border: 1px solid #32ff32;
+      color: #6bff6b;
+    }
+
+    .message.error {
+      background: rgba(255, 50, 50, 0.1);
+      border: 1px solid #ff3232;
+      color: #ff6b6b;
+    }
+
+    .checkbox-option {
+      display: flex;
+      align-items: center;
+      padding: 12px;
+      background: #2a2a2a;
+      border: 2px solid #333;
+      border-radius: 6px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .checkbox-option:hover {
+      border-color: #4a9eff;
+      background: #333;
+    }
+
+    .checkbox-option.checked {
+      border-color: #4a9eff;
+      background: #1a1560;
+    }
+
+    .checkbox-option input[type="checkbox"] {
+      margin-right: 12px;
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="header-title">⚙️ Settings</div>
+    <a href="main.html" class="btn">← Back to Browser</a>
+  </div>
+
+  <div class="container">
+    <div class="message" id="message"></div>
+
+    <div class="settings-section">
+      <div class="section-title">API Source</div>
+      <div class="setting-item">
+        <div class="setting-label">Choose Image Source</div>
+        <div class="setting-description">
+          Select which API to use for fetching images. You can enable one or both sources.
+        </div>
+        
+        <div class="checkbox-option" id="option-pgn">
+          <input type="checkbox" id="api-pgn" value="pgn">
+          <div class="radio-option-content">
+            <div class="radio-option-name">12nineteen API (PGN)</div>
+            <div class="radio-option-desc">Primary source with tag categories and rich metadata</div>
+          </div>
+        </div>
+
+        <div class="checkbox-option" id="option-jb4">
+          <input type="checkbox" id="api-jb4" value="jb4">
+          <div class="radio-option-content">
+            <div class="radio-option-name">JB4 Server API</div>
+            <div class="radio-option-desc">Alternative source with larger image collection</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="setting-item">
+        <div class="setting-label">Default Sort Order</div>
+        <div class="setting-description">
+          Choose how posts are sorted by default
+        </div>
+        
+        <div class="radio-group">
+          <div class="radio-option" onclick="selectSort('date')">
+            <input type="radio" name="sort" id="sort-date" value="date">
+            <div class="radio-option-content">
+              <div class="radio-option-name">Date (Newest First)</div>
+              <div class="radio-option-desc">Most recently uploaded posts</div>
+            </div>
+          </div>
+
+          <div class="radio-option" onclick="selectSort('popularity')">
+            <input type="radio" name="sort" id="sort-popularity" value="popularity">
+            <div class="radio-option-content">
+              <div class="radio-option-name">Popularity (Most Upvoted)</div>
+              <div class="radio-option-desc">Posts with the most upvotes</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button class="save-btn" id="saveBtn">Save Settings</button>
+  </div>
+
+  <script>
+    const sessionId = localStorage.getItem('session_id');
+    if (!sessionId) {
+      window.location.href = '/login.html';
+    }
+
+    // Load current settings
+    loadSettings();
+
+    async function loadSettings() {
+      try {
+        const response = await fetch(`settings.php?action=get&session_id=${sessionId}`);
+        const data = await response.json();
+        
+        if (data.settings) {
+          // Load API preferences
+          const apis = data.settings.enabled_apis || ['pgn'];
+          document.getElementById('api-pgn').checked = apis.includes('pgn');
+          document.getElementById('api-jb4').checked = apis.includes('jb4');
+          updateCheckboxStyles();
+          
+          // Load sort preference
+          const sort = data.settings.default_sort || 'date';
+          document.getElementById(`sort-${sort}`).checked = true;
+          selectSort(sort);
+        }
+      } catch (err) {
+        console.error('Error loading settings:', err);
+      }
+    }
+
+    // Checkbox styling
+    document.querySelectorAll('.checkbox-option input').forEach(checkbox => {
+      checkbox.addEventListener('change', updateCheckboxStyles);
+    });
+
+    function updateCheckboxStyles() {
+      document.querySelectorAll('.checkbox-option').forEach(option => {
+        const checkbox = option.querySelector('input[type="checkbox"]');
+        if (checkbox.checked) {
+          option.classList.add('checked');
+        } else {
+          option.classList.remove('checked');
+        }
+      });
+    }
+
+    // Sort selection
+    function selectSort(value) {
+      document.querySelectorAll('.radio-option').forEach(opt => {
+        opt.classList.remove('selected');
+      });
+      document.getElementById(`sort-${value}`).checked = true;
+      document.getElementById(`sort-${value}`).closest('.radio-option').classList.add('selected');
+    }
+
+    // Save settings
+    document.getElementById('saveBtn').addEventListener('click', async () => {
+      const enabledAPIs = [];
+      if (document.getElementById('api-pgn').checked) enabledAPIs.push('pgn');
+      if (document.getElementById('api-jb4').checked) enabledAPIs.push('jb4');
+      
+      if (enabledAPIs.length === 0) {
+        showMessage('Please enable at least one API source', 'error');
+        return;
+      }
+      
+      const sortOrder = document.querySelector('input[name="sort"]:checked').value;
+      
+      try {
+        const formData = new FormData();
+        formData.append('action', 'save');
+        formData.append('session_id', sessionId);
+        formData.append('enabled_apis', JSON.stringify(enabledAPIs));
+        formData.append('default_sort', sortOrder);
+        
+        const response = await fetch('settings.php', {
+          method: 'POST',
+          body: formData
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+          showMessage('Settings saved successfully!', 'success');
+          
+          // Update localStorage
+          localStorage.setItem('enabled_apis', JSON.stringify(enabledAPIs));
+          localStorage.setItem('default_sort', sortOrder);
+          
+          // Redirect after 1 second
+          setTimeout(() => {
+            window.location.href = 'main.html';
+          }, 1000);
+        } else {
+          showMessage(data.error || 'Failed to save settings', 'error');
+        }
+      } catch (err) {
+        console.error('Error saving settings:', err);
+        showMessage('Failed to save settings', 'error');
+      }
+    });
+
+    function showMessage(text, type) {
+      const msg = document.getElementById('message');
+      msg.textContent = text;
+      msg.className = `message ${type} show`;
+      setTimeout(() => {
+        msg.classList.remove('show');
+      }, 5000);
+    }
+  </script>
+</body>
+</html>
